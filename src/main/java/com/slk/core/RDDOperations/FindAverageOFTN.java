@@ -12,6 +12,8 @@ import org.apache.spark.api.java.function.Function;
 import org.apache.spark.api.java.function.Function2;
 import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.api.java.function.VoidFunction;
+import org.apache.spark.broadcast.Broadcast;
+import org.apache.spark.util.LongAccumulator;
 
 import scala.Tuple2;
 
@@ -21,7 +23,7 @@ public class FindAverageOFTN {
 			SparkConf conf = new SparkConf().setAppName("Sample").setMaster("local[*]");
 		
 		JavaSparkContext sc = new JavaSparkContext(conf);
-		
+		Broadcast<int[]> bcastvar = sc.broadcast(new int[]{1,2,3});
 		
 		JavaPairRDD<String, Integer> RDD1 = sc.parallelizePairs(
 		         Arrays.asList(
@@ -39,8 +41,9 @@ public class FindAverageOFTN {
 		           new Tuple2<String, String>("Shenbagam","Granny"),
 		           new Tuple2<String, String>("Somasundaram","GrandPA")), 2);
 		
-		
-		
+		bcastvar.value();
+		LongAccumulator accum = sc.sc().longAccumulator();
+		accum.add(0l);
 		//Join
 		RDD1.join(RDD2).foreach(new VoidFunction<Tuple2<String,Tuple2<Integer,String>>>(){
 
@@ -54,6 +57,8 @@ public class FindAverageOFTN {
 	});
 		
 		System.out.println(RDD1.toDebugString());
+		
+		
 		
 	/*	
 		System.out.println("--------------Join-----------------");
