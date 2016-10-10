@@ -27,7 +27,7 @@ public class SampleStreaming1 {
 		
 		JavaStreamingContext  jsc = new JavaStreamingContext(conf, Durations.seconds(15));
 		
-		JavaDStream<String> lines = jsc.textFileStream("D:/Streaming/Data/Input/");
+		JavaDStream<String> lines = jsc.textFileStream("D:/Streaming/Data/Input");
 		
 		JavaDStream<String> newrdd = lines.repartition(3);
 		newrdd.foreachRDD(new VoidFunction<JavaRDD<String>>(){
