@@ -29,6 +29,9 @@ public class SampleStreaming1 {
 		
 		JavaDStream<String> lines = jsc.textFileStream("D:/Streaming/Data/Input");
 		
+		
+
+		
 		JavaDStream<String> newrdd = lines.repartition(3);
 		newrdd.foreachRDD(new VoidFunction<JavaRDD<String>>(){
 
