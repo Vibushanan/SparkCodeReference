@@ -59,6 +59,8 @@ public class CustomReceiver extends Receiver<String>{
 		
 		store(list_Files);
 		
+		
+		
 		}catch(Throwable t){
 			 restart("Error receiving data", t);
 		}
