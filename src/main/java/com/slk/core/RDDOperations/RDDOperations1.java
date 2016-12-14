@@ -76,8 +76,7 @@ public class RDDOperations1 {
 			
 		});
 		
-		
-		
+				
 		
 		//.sample(false, 0.2, 0);
 		

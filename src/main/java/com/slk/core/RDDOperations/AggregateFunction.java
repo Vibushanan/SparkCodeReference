@@ -46,7 +46,7 @@ public class AggregateFunction {
 				         });
 		
 		
-		System.out.println(sets.collectAsMap());
+		System.out.println("======>   "+sets.collectAsMap());
 		
 
 		JavaPairRDD<Integer, Integer> sets1  = pairs.aggregateByKey(new Integer(0), new Function2<Integer,Integer,Integer>(){
@@ -65,7 +65,7 @@ public class AggregateFunction {
 			
 		});
 
-		System.out.println(sets1.collectAsMap());
+		System.out.println("===========> "+sets1.collectAsMap());
 		
 		
 			}

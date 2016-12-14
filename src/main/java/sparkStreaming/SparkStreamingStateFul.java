@@ -65,6 +65,10 @@ public class SparkStreamingStateFul {
 		});
 		
 		token_Pair.print();
+		
+		
+		
+		
 		token_Pair.updateStateByKey(new Function2<List<Integer>,Optional<Integer>,Optional<Integer>>(){
 
 			public Optional<Integer> call(List<Integer> arg0,
@@ -80,8 +84,6 @@ public class SparkStreamingStateFul {
 			
 			
 		}).print();
-		
-		
 		
 		jsc.start();
 

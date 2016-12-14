@@ -50,7 +50,7 @@ public class FindAverageOFTN {
 		public void call(Tuple2<String, Tuple2<Integer, String>> arg0)
 				throws Exception {
 
-					System.out.println(arg0._1()+"   :   "+arg0._2._1+" - "+arg0._2()._2);
+					System.out.println("Joined  == > "+arg0._1()+"   :   "+arg0._2._1+" - "+arg0._2()._2);
 			
 		}
 		
@@ -58,9 +58,21 @@ public class FindAverageOFTN {
 		
 		System.out.println(RDD1.toDebugString());
 		
+		JavaPairRDD<String, Tuple2<Iterable<Integer>, Iterable<String>>> cgRDD = RDD1.cogroup(RDD2);
 		
 		
-	/*	
+		cgRDD.foreach(new VoidFunction<Tuple2<String,Tuple2<Iterable<Integer>,Iterable<String>>>>(){
+
+			public void call(
+					Tuple2<String, Tuple2<Iterable<Integer>, Iterable<String>>> t)
+					throws Exception {
+				System.out.println("CGroup   --> "+t._1()+"  "+t._2._1);
+				
+			}
+			
+		});
+		
+		
 		System.out.println("--------------Join-----------------");
 		RDD1.cogroup(RDD2).foreach(new VoidFunction<Tuple2<String,Tuple2<Iterable<Integer>,Iterable<String>>>>(){
 
@@ -89,7 +101,7 @@ public class FindAverageOFTN {
 		});
 		System.out.println("--------------Join-----------------");
 		
-	*/
+	
 		
 		JavaRDD<String> distFile = sc.textFile("D:/Downloads/UIDAI-ENR-DETAIL-20160907-20160913/UIDAI-ENR-DETAIL-20160911.csv");
 		
