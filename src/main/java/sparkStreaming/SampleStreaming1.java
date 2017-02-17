@@ -3,6 +3,7 @@ package sparkStreaming;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import org.apache.spark.Accumulator;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.FlatMapFunction;
@@ -25,18 +26,29 @@ public class SampleStreaming1 {
 		
 		SparkConf conf = new SparkConf().setAppName("Sample Streaming").setMaster("local[*]");
 		
-		JavaStreamingContext  jsc = new JavaStreamingContext(conf, Durations.seconds(15));
+		JavaStreamingContext  jsc = new JavaStreamingContext(conf, Durations.seconds(5));
 		
 		JavaDStream<String> lines = jsc.textFileStream("D:/Streaming/Data/Input");
 		
 		
-
+		lines.print();
 		
 		JavaDStream<String> newrdd = lines.repartition(3);
+		
+		
+		int count = 0;
+		newrdd.print();
 		newrdd.foreachRDD(new VoidFunction<JavaRDD<String>>(){
 
 			public void call(JavaRDD<String> arg0) throws Exception {
-				System.out.println("For an RDD "+arg0.getNumPartitions());
+				
+				
+				System.out.println("For an RDD called "+arg0.getNumPartitions());
+			
+				System.out.println("Count   :"+arg0.count());
+				
+				System.out.println(arg0.getNumPartitions());
+				
 				arg0.foreach(new VoidFunction<String>(){
 
 					public void call(String arg0) throws Exception {
